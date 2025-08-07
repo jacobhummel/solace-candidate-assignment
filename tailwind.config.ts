@@ -8,10 +8,24 @@ const config: Config = {
   ],
   theme: {
     extend: {
+      colors: {
+        solace: {
+          blue: "#1C4E80",
+          lightBlue: "#E3F2FD",
+          teal: "#00B4B7",
+          green: "#A3D9B1",
+          yellow: "#FFE066",
+          gray: "#F6F7FB",
+          dark: "#1A2A3A",
+        },
+      },
       backgroundImage: {
-        "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
-        "gradient-conic":
-          "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
+        "solace-gradient": "linear-gradient(135deg, #E3F2FD 0%, #A3D9B1 100%)",
+        "solace-radial":
+          "radial-gradient(circle at 20% 40%, #00B4B7 0%, #1C4E80 100%)",
+      },
+      fontFamily: {
+        sans: ["Inter", "Helvetica", "Arial", "sans-serif"],
       },
     },
   },

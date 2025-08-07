@@ -17,6 +17,9 @@ export async function GET(request: Request) {
       return (
         advocate.firstName.toLowerCase().includes(searchTerm) ||
         advocate.lastName.toLowerCase().includes(searchTerm) ||
+        `${advocate.firstName} ${advocate.lastName}`
+          .toLowerCase()
+          .includes(searchTerm) ||
         advocate.city.toLowerCase().includes(searchTerm) ||
         advocate.degree.toLowerCase().includes(searchTerm) ||
         (Array.isArray(advocate.specialties) &&
