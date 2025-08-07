@@ -38,6 +38,7 @@ export default function Home() {
         </p>
         <input
           style={{ border: "1px solid black" }}
+          value={searchTerm}
           onChange={onSearchTermChange}
         />
         <button onClick={onClick}>Reset Search</button>
