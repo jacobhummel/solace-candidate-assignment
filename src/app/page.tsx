@@ -6,41 +6,24 @@ import { isStringArray } from "./helpers";
 
 export default function Home() {
   const [advocates, setAdvocates] = useState<Advocate[]>([]);
-  const [filteredAdvocates, setFilteredAdvocates] = useState<Advocate[]>([]);
   const [searchTerm, setSearchTerm] = useState<string>("");
-
-  useEffect(() => {
-    fetch("/api/advocates").then((response) => {
-      response.json().then((jsonResponse) => {
-        setAdvocates(jsonResponse.data);
-        setFilteredAdvocates(jsonResponse.data);
-      });
-    });
-  }, []);
 
   const onSearchTermChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchTerm(e.target.value);
   };
 
   useEffect(() => {
-    const term = searchTerm.toLowerCase();
-    const filtered = advocates.filter((advocate) => {
-      return (
-        advocate.firstName.toLowerCase().includes(term) ||
-        advocate.lastName.toLowerCase().includes(term) ||
-        advocate.city.toLowerCase().includes(term) ||
-        advocate.degree.toLowerCase().includes(term) ||
-        (isStringArray(advocate.specialties)
-          ? advocate.specialties.some((s) => s.toLowerCase().includes(term))
-          : false) ||
-        String(advocate.yearsOfExperience).includes(term)
-      );
-    });
-    setFilteredAdvocates(filtered);
-  }, [searchTerm, advocates]);
+    const fetchData = async () => {
+      const response = await fetch(`/api/advocates?search=${searchTerm}`);
+      const jsonResponse = await response.json();
+      setAdvocates(jsonResponse.data);
+    };
+
+    fetchData();
+  }, [searchTerm]);
 
   const onClick = () => {
-    setFilteredAdvocates(advocates);
+    setSearchTerm("");
   };
 
   return (
@@ -74,7 +57,7 @@ export default function Home() {
           </tr>
         </thead>
         <tbody>
-          {filteredAdvocates.map((advocate) => {
+          {advocates.map((advocate) => {
             return (
               <tr key={advocate.id}>
                 <td>{advocate.firstName}</td>
