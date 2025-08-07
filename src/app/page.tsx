@@ -4,6 +4,7 @@ import Image from "next/image";
 import { Advocate } from "@/db/schema";
 import { useEffect, useState } from "react";
 import { isStringArray } from "./helpers";
+import { AdvocateCard } from "./components/AdvocateCard";
 
 export default function Home() {
   const [advocates, setAdvocates] = useState<Advocate[]>([]);
@@ -90,7 +91,7 @@ export default function Home() {
           </div>
         </div>
       </section>
-      {/* Search and table section below branding */}
+      {/* Search and card section below branding */}
       <section className="w-full max-w-7xl flex-1">
         <div className="bg-white rounded-2xl shadow-xl p-8 border border-[#e3f2fd]">
           <label
@@ -125,83 +126,16 @@ export default function Home() {
               <>Showing all advocates</>
             )}
           </p>
-          <div className="overflow-x-auto">
-            <table className="min-w-full bg-white rounded-xl shadow border border-[#e3f2fd]">
-              <thead className="bg-[#e3f2fd]">
-                <tr>
-                  <th className="px-6 py-4 text-left font-bold text-[#25463b] text-base border-b border-[#e3f2fd]">
-                    First Name
-                  </th>
-                  <th className="px-6 py-4 text-left font-bold text-[#25463b] text-base border-b border-[#e3f2fd]">
-                    Last Name
-                  </th>
-                  <th className="px-6 py-4 text-left font-bold text-[#25463b] text-base border-b border-[#e3f2fd]">
-                    City
-                  </th>
-                  <th className="px-6 py-4 text-left font-bold text-[#25463b] text-base border-b border-[#e3f2fd]">
-                    Degree
-                  </th>
-                  <th className="px-6 py-4 text-left font-bold text-[#25463b] text-base border-b border-[#e3f2fd]">
-                    Specialties
-                  </th>
-                  <th className="px-6 py-4 text-left font-bold text-[#25463b] text-base border-b border-[#e3f2fd]">
-                    Years of Experience
-                  </th>
-                  <th className="px-6 py-4 text-left font-bold text-[#25463b] text-base border-b border-[#e3f2fd]">
-                    Phone Number
-                  </th>
-                </tr>
-              </thead>
-              <tbody>
-                {advocates.length === 0 ? (
-                  <tr>
-                    <td
-                      colSpan={7}
-                      className="text-center py-12 text-[#1a2a3a] text-xl"
-                    >
-                      No advocates found.
-                    </td>
-                  </tr>
-                ) : (
-                  advocates.map((advocate) => (
-                    <tr
-                      key={advocate.id}
-                      className="border-b border-[#f6f7fb] hover:bg-[#e3f2fd] transition"
-                    >
-                      <td className="px-6 py-4 text-[#1a2a3a]">
-                        {advocate.firstName}
-                      </td>
-                      <td className="px-6 py-4 text-[#1a2a3a]">
-                        {advocate.lastName}
-                      </td>
-                      <td className="px-6 py-4 text-[#1a2a3a]">
-                        {advocate.city}
-                      </td>
-                      <td className="px-6 py-4 text-[#1a2a3a]">
-                        {advocate.degree}
-                      </td>
-                      <td className="px-6 py-4">
-                        {isStringArray(advocate.specialties) &&
-                          advocate.specialties.map((s) => (
-                            <span
-                              key={s}
-                              className="inline-block bg-[#ffe066] text-[#1a2a3a] rounded-full px-3 py-1 mr-2 mb-1 text-xs font-semibold shadow"
-                            >
-                              {s}
-                            </span>
-                          ))}
-                      </td>
-                      <td className="px-6 py-4 text-[#1a2a3a]">
-                        {advocate.yearsOfExperience}
-                      </td>
-                      <td className="px-6 py-4 text-[#1a2a3a]">
-                        {advocate.phoneNumber}
-                      </td>
-                    </tr>
-                  ))
-                )}
-              </tbody>
-            </table>
+          <div className="grid grid-cols-1 md:grid-cols-3 xl:grid-cols-4 gap-8">
+            {advocates.length === 0 ? (
+              <div className="col-span-full text-center py-12 text-[#1a2a3a] text-xl">
+                No advocates found.
+              </div>
+            ) : (
+              advocates.map((advocate) => (
+                <AdvocateCard key={advocate.id} advocate={advocate} />
+              ))
+            )}
           </div>
         </div>
       </section>
