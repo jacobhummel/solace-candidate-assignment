@@ -20,5 +20,6 @@ const advocates = pgTable("advocates", {
   phoneNumber: bigint("phone_number", { mode: "number" }).notNull(),
   createdAt: timestamp("created_at").default(sql`CURRENT_TIMESTAMP`),
 });
+export type Advocate = typeof advocates.$inferSelect;
 
 export { advocates };
