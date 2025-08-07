@@ -14,7 +14,7 @@ export default function Home() {
 
   useEffect(() => {
     const fetchData = async () => {
-      const response = await fetch(`/api/advocates?search=${searchTerm}`);
+      const response = await fetch(`/api/advocates?search=${encodeURIComponent(searchTerm)}`);
       const jsonResponse = await response.json();
       setAdvocates(jsonResponse.data);
     };
