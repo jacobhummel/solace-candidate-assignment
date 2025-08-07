@@ -14,7 +14,7 @@ export function AdvocateCard({ advocate }: { advocate: Advocate }) {
     <div className="bg-white rounded-2xl shadow-xl overflow-hidden flex flex-col transition hover:shadow-2xl border border-[#e3f2fd]">
       <div className="w-full h-48 relative">
         <img
-          src={`https://placehold.co/400x400?text=${advocate.firstName}+${advocate.lastName}`}
+          src={`https://placehold.co/400x400?text=${encodeURIComponent(advocate.firstName)}+${encodeURIComponent(advocate.lastName)}`}
           alt={`${advocate.firstName} ${advocate.lastName}`}
           className="object-cover w-full h-full"
         />
