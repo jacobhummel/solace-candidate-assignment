@@ -2,6 +2,7 @@
 
 import { Advocate } from "@/db/schema";
 import { useEffect, useState } from "react";
+import { isStringArray } from "./helpers";
 
 export default function Home() {
   const [advocates, setAdvocates] = useState<Advocate[]>([]);
@@ -29,8 +30,8 @@ export default function Home() {
         advocate.lastName.toLowerCase().includes(term) ||
         advocate.city.toLowerCase().includes(term) ||
         advocate.degree.toLowerCase().includes(term) ||
-        (Array.isArray(advocate.specialties)
-          ? advocate.specialties.join(" ").toLowerCase().includes(term)
+        (isStringArray(advocate.specialties)
+          ? advocate.specialties.some((s) => s.toLowerCase().includes(term))
           : false) ||
         String(advocate.yearsOfExperience).includes(term)
       );
@@ -75,15 +76,14 @@ export default function Home() {
         <tbody>
           {filteredAdvocates.map((advocate) => {
             return (
-              <tr>
+              <tr key={advocate.id}>
                 <td>{advocate.firstName}</td>
                 <td>{advocate.lastName}</td>
                 <td>{advocate.city}</td>
                 <td>{advocate.degree}</td>
                 <td>
-                  {advocate.specialties.map((s) => (
-                    <div>{s}</div>
-                  ))}
+                  {isStringArray(advocate.specialties) &&
+                    advocate.specialties.map((s) => <div key={s}>{s}</div>)}
                 </td>
                 <td>{advocate.yearsOfExperience}</td>
                 <td>{advocate.phoneNumber}</td>
