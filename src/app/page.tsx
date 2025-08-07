@@ -32,7 +32,7 @@ export default function Home() {
         (Array.isArray(advocate.specialties)
           ? advocate.specialties.join(" ").toLowerCase().includes(term)
           : false) ||
-        term.includes(String(advocate.yearsOfExperience))
+        String(advocate.yearsOfExperience).includes(term)
       );
     });
     setFilteredAdvocates(filtered);
