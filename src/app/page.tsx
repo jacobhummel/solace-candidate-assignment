@@ -19,7 +19,26 @@ export default function Home() {
       setAdvocates(jsonResponse.data);
     };
 
-    fetchData();
+      try {
+        const response = await fetch(`/api/advocates?search=${searchTerm}`);
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        const jsonResponse = await response.json();
+        setAdvocates(jsonResponse.data);
+      } catch (error) {
+        console.error("Failed to fetch advocates:", error);
+        setAdvocates([]); // Optionally clear advocates on error
+      }
+    };
+
+    const handler = setTimeout(() => {
+      fetchData();
+    }, 300); // 300ms debounce
+
+    return () => {
+      clearTimeout(handler);
+    };
   }, [searchTerm]);
 
   const onClick = () => {
